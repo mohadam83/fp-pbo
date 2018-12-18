@@ -13,18 +13,26 @@ MainPanel::MainPanel(SwitchFrame * parent) :
 	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
 	this->SetBackgroundColour(wxColour(*wxWHITE));
+
 	//load	JPEGHandler	untuk	membaca	file	JPEG.
 	wxImageHandler	*jpegLoader = new	wxJPEGHandler();
+	wxImageHandler *pngHandler = new wxPNGHandler();
 	wxImage::AddHandler(jpegLoader);
-	wxImage::AddHandler(new wxPNGHandler);
+	wxImage::AddHandler(pngHandler);
 	//load	image
 	this->LoadPotatoBitmap();
-	wxBitmapButton* boardButton = new wxBitmapButton(this, 1001, wxBitmap(wxT("play1.png"), wxBITMAP_TYPE_PNG),
-		wxPoint(95, 156));
-	wxBitmapButton* directionButton = new wxBitmapButton(this, 1002, wxBitmap(wxT("direction.png"), wxBITMAP_TYPE_PNG),
-		wxPoint(60, 250));
-	wxBitmapButton* Skor = new wxBitmapButton(this, 1003, wxBitmap(wxT("highscores1.png"), wxBITMAP_TYPE_PNG),
-		wxPoint(60, 287));
+	this->playButton = new PlayingButton(this);
+	this->playButton->SetTombol(95, 156, 1001);
+	this->petunjukButton = new DirectionButton(this);
+	this->petunjukButton->SetTombol(60, 250, 1002);
+	this->scoreButton = new ScoreButton(this);
+	this->scoreButton->SetTombol(60, 287, 1003);
+	//wxBitmapButton* boardButton = new wxBitmapButton(this, 1001, wxBitmap(wxT("play1.png"), wxBITMAP_TYPE_PNG),
+		//wxPoint(95, 156));
+	//wxBitmapButton* directionButton = new wxBitmapButton(this, 1002, wxBitmap(wxT("direction.png"), wxBITMAP_TYPE_PNG),
+//		wxPoint(60, 250));
+	//wxBitmapButton* Skor = new wxBitmapButton(this, 1003, wxBitmap(wxT("highscores1.png"), wxBITMAP_TYPE_PNG),
+		//wxPoint(60, 287));
 }
 MainPanel::~MainPanel()
 {

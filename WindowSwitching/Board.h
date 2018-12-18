@@ -29,6 +29,8 @@ private:
 
 	int SquareWidth() { return GetClientSize().GetWidth() / BoardWidth; }
 	int SquareHeight() { return GetClientSize().GetHeight() / BoardHeight; }
+	int level = 6, next_level = 6, tingkat, temp;
+	int waktu = 800;
 	void ClearBoard();
 	void DropDown();
 	void OneLineDown();

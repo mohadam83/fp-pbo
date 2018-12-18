@@ -6,7 +6,7 @@ class DirectionPanel : public wxPanel
 public:
 	DirectionPanel(SwitchFrame* parent);
 	~DirectionPanel();
-	void OnBackButtonClick(wxCommandEvent& event);
+	//void OnBackButtonClick(wxCommandEvent& event);
 
 	void OnPaint(wxPaintEvent	&event);
 private:

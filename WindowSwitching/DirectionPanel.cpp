@@ -2,7 +2,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 BEGIN_EVENT_TABLE(DirectionPanel, wxPanel)
-EVT_BUTTON(1001, DirectionPanel::OnBackButtonClick)
+//EVT_BUTTON(1001, DirectionPanel::OnBackButtonClick)
 EVT_PAINT(DirectionPanel::OnPaint)
 END_EVENT_TABLE()
 DirectionPanel::DirectionPanel(SwitchFrame * parent) :
@@ -11,8 +11,8 @@ DirectionPanel::DirectionPanel(SwitchFrame * parent) :
 	this->SetBackgroundColour(wxColour(*wxWHITE));
 	wxImage::AddHandler(new wxPNGHandler);
 	wxImage::AddHandler(new wxJPEGHandler);
-	wxBitmapButton* backButton = new wxBitmapButton(this, 1001, wxBitmap(wxT("back.jpg"), wxBITMAP_TYPE_JPEG),
-		wxPoint(120, 400));
+	//wxBitmapButton* backButton = new wxBitmapButton(this, 1001, wxBitmap(wxT("back.jpg"), wxBITMAP_TYPE_JPEG),
+	//	wxPoint(120, 400));
 	//load	image
 	this->LoadPetunjuk();
 }
@@ -20,10 +20,10 @@ DirectionPanel::~DirectionPanel()
 {
 	delete petunjuk;
 }
-void DirectionPanel::OnBackButtonClick(wxCommandEvent & event)
+/*void DirectionPanel::OnBackButtonClick(wxCommandEvent & event)
 {
 	parentFrame->ShowMainPanel();
-}
+}*/
 
 void DirectionPanel::OnPaint(wxPaintEvent & event)
 {

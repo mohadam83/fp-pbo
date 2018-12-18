@@ -10,7 +10,7 @@ Board::Board(SwitchFrame * parent) :
 		wxDefaultSize, wxBORDER_NONE), parentFrame(parent)
 {
 	timer = new wxTimer(this, 1);
-
+	
 	isFallingFinished = false;
 	isStarted = false;
 	isPaused = false;
@@ -19,14 +19,14 @@ Board::Board(SwitchFrame * parent) :
 	curY = 0;
 
 	ClearBoard();
-
+	this->SetBackgroundColour(wxColour(*wxBLACK));
 	Connect(wxEVT_PAINT, wxPaintEventHandler(Board::OnPaint));
 	Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Board::OnKeyDown));
 	Connect(wxEVT_TIMER, wxCommandEventHandler(Board::OnTimer));
 	
-	wxImageHandler	*jpegLoader = new	wxJPEGHandler();
+	/*wxImageHandler	*jpegLoader = new	wxJPEGHandler();
 	wxImage::AddHandler(jpegLoader);
-	this->LoadBackground();
+	//this->LoadBackground();*/
 }
 
 void Board::Start()
@@ -40,7 +40,7 @@ void Board::Start()
 	ClearBoard();
 
 	NewPiece();
-	timer->Start(700);
+	timer->Start(waktu);
 }
 
 void Board::Pause()
@@ -53,7 +53,7 @@ void Board::Pause()
 
 	}
 	else {
-		timer->Start(700);
+		timer->Start(waktu);
 	}
 	Refresh();
 }
@@ -62,7 +62,7 @@ void Board::OnPaint(wxPaintEvent& event)
 {
 	wxPaintDC dc(this);
 
-	dc.DrawBitmap(*this->backgroundGame, wxPoint(0, 0), true);
+	//dc.DrawBitmap(*this->backgroundGame, wxPoint(0, 0), true);
 
 	wxSize size = GetClientSize();
 	int boardTop = size.GetHeight() - BoardHeight * SquareHeight();
@@ -88,14 +88,27 @@ void Board::OnPaint(wxPaintEvent& event)
 	}
 	dc.SetBrush(*wxWHITE_BRUSH);
 	dc.SetPen(wxPen(*wxRED, 4, wxPENSTYLE_SOLID));
-	dc.DrawRectangle(wxPoint(250, 0), wxSize(50, 35));
+	dc.DrawRectangle(wxPoint(180, 0), wxSize(115, 35));
 
 	wxString x;
+	x << "Skor : ";
 	x << numLinesRemoved;
 	wxFont font(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	dc.SetFont(font);
 	dc.SetTextForeground(wxColour(221, 34, 34));
-	dc.DrawText(x, wxPoint(255, 0));
+	dc.DrawText(x, wxPoint(190, 0));
+
+	dc.SetBrush(*wxWHITE_BRUSH);
+	dc.SetPen(wxPen(*wxRED, 4, wxPENSTYLE_SOLID));
+	dc.DrawRectangle(wxPoint(0, 0), wxSize(115, 35));
+
+	wxString y;
+	y << "Level : ";
+	y << tingkat;
+	wxFont fonts(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
+	dc.SetFont(fonts);
+	dc.SetTextForeground(wxColour(221, 34, 34));
+	dc.DrawText(y, wxPoint(5, 0));
 
 	dc.SetPen(wxNullPen);
 }
@@ -230,6 +243,16 @@ void Board::RemoveFullLines()
 	}
 	if (numFullLines > 0) {
 		numLinesRemoved += numFullLines;
+		temp = tingkat;
+		if (numLinesRemoved >= level) {
+			level += next_level;
+			tingkat = numLinesRemoved / 6;
+			if (temp != tingkat) {
+				waktu = waktu * 4 / 5;
+			}		
+			timer->Start(waktu);
+		}
+		
 		isFallingFinished = true;
 		curPiece.SetShape(NoShape);
 		Refresh();
@@ -318,7 +341,7 @@ void Board::DrawSquare(wxPaintDC& dc, int x, int y, Tetrominoes shape)
 		SquareHeight() - 2);
 }
 
-void Board::LoadBackground()
+/*void Board::LoadBackground()
 {
 	//jika	menggunakan	relative	path
 	//letakkan	file	potato.jpg	pada	folder	Debug
@@ -329,4 +352,4 @@ void Board::LoadBackground()
 	//wxImage	image(fileLocation,	wxBITMAP_TYPE_JPEG);
 	wxImage	image(wxT("D:\\MY BIG FAMILY\\gambar1.jpg"), wxBITMAP_TYPE_JPEG);
 	backgroundGame = new wxBitmap(image);
-}
+}*/
